@@ -1,0 +1,32 @@
+BO SUNG DOCKER VAO PROJECT PHASE 2 HIEN TAI
+
+1. Sao luu thu muc D:\PTTKHTTT\pentest-mgmt truoc khi chep de.
+2. Giai nen BO-SUNG-DOCKER.zip vao thu muc tam.
+3. Copy TOAN BO noi dung vua giai nen vao D:\PTTKHTTT\pentest-mgmt.
+   Chon Replace neu Windows hoi. Cac file PHP/SQL duoc sua de chay voi Docker.
+   File compose.yaml phai nam cung cap voi thu muc app, config, public.
+   Neu ban da tu sua code sau Phase 2, so sanh file truoc khi chep de.
+4. Mo Docker Desktop va cho Engine chay (Linux containers).
+5. Mo Git Bash, chay tung lenh:
+
+cd /d/PTTKHTTT/pentest-mgmt
+ls -l Dockerfile compose.yaml scripts/setup.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "./scripts/setup.ps1"
+docker compose up -d --build
+docker compose ps -a
+
+6. Mo http://localhost:8080
+   admin / Password123!       : quan tri tai khoan
+   pm.tran / Password123!     : tao dot pentest
+   approver.le / Password123! : phe duyet
+
+Neu loi:
+docker compose logs --tail 80 db init web
+
+init Exited (0) la da khoi tao thanh cong, khong phai loi.
+Khong chay docker compose down -v neu muon giu database.
+Khong commit file .env len GitHub.
+
+Goi nay chi bo sung file moi va file can sua; khong phai project day du.
+Da kiem tra cau truc goi/config; chua build/chay Docker tich hop trong moi truong tao goi.
+Doc README.md de xem huong dan chi tiet va cac chuc nang Phase 2 con thieu.

@@ -1,0 +1,139 @@
+/* =============================================================
+   app.css - Theme "SOC / Enterprise Dashboard"
+   Tone màu: Navy + Trắng + Xám, accent đỏ/cam cho Critical/High
+   ============================================================= */
+
+:root {
+    --navy-900: #0b1622;
+    --navy-800: #101d2e;
+    --navy-700: #16283f;
+    --navy-600: #1e3555;
+    --gray-100: #f4f6f9;
+    --gray-300: #dfe4ea;
+    --gray-500: #8a94a6;
+    --accent-red: #e5484d;
+    --accent-orange: #f5893b;
+    --accent-yellow: #eab308;
+    --accent-green: #22a06b;
+    --accent-blue: #2f6fed;
+}
+
+body {
+    background-color: var(--gray-100);
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    color: #1f2733;
+}
+
+/* ---------------- LOGIN PAGE ---------------- */
+.login-page {
+    background: radial-gradient(circle at top left, var(--navy-700), var(--navy-900));
+    min-height: 100vh;
+}
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-card {
+    width: 380px;
+    background: var(--navy-800);
+    border: 1px solid var(--navy-600);
+    border-radius: 10px;
+    padding: 32px 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+}
+.login-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    color: #fff;
+}
+.login-brand i { font-size: 32px; color: var(--accent-red); }
+.login-brand-title { font-weight: 700; letter-spacing: 1px; font-size: 18px; }
+.login-brand-sub { font-size: 11px; color: var(--gray-500); }
+.login-page .form-label, .text-light-muted { color: var(--gray-300) !important; }
+.login-page .form-control, .login-page .input-group-text {
+    background: var(--navy-700); border: 1px solid var(--navy-600); color: #fff;
+}
+.login-page .form-control:focus { background: var(--navy-700); color: #fff; box-shadow: none; border-color: var(--accent-red); }
+.login-footnote { margin-top: 16px; font-size: 11px; color: var(--gray-500); text-align: center; }
+
+/* ---------------- APP SHELL (Sidebar + Navbar) ---------------- */
+.app-shell { display: flex; min-height: 100vh; }
+
+.sidebar {
+    width: 240px;
+    background: var(--navy-900);
+    color: #cfd8e3;
+    flex-shrink: 0;
+    min-height: 100vh;
+}
+.sidebar .brand {
+    display: flex; align-items: center; gap: 10px;
+    padding: 18px 16px; color: #fff; font-weight: 700; font-size: 15px;
+    border-bottom: 1px solid var(--navy-700);
+}
+.sidebar .brand i { color: var(--accent-red); font-size: 20px; }
+.sidebar .nav-link {
+    color: #9fb0c3; padding: 10px 16px; font-size: 14px; border-left: 3px solid transparent;
+}
+.sidebar .nav-link i { width: 20px; margin-right: 8px; }
+.sidebar .nav-link:hover { background: var(--navy-800); color: #fff; }
+.sidebar .nav-link.active {
+    background: var(--navy-800); color: #fff; border-left-color: var(--accent-red);
+}
+.sidebar .nav-section-title {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+    color: var(--gray-500); padding: 16px 16px 6px;
+}
+
+.main-area { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+
+.topbar {
+    background: #fff; border-bottom: 1px solid var(--gray-300);
+    padding: 10px 20px; display: flex; align-items: center; justify-content: space-between;
+}
+.topbar .role-pill {
+    background: var(--navy-800); color: #fff; font-size: 11px; padding: 3px 10px; border-radius: 20px;
+}
+.breadcrumb-bar { padding: 10px 20px 0; font-size: 13px; color: var(--gray-500); }
+.page-content { padding: 16px 20px 40px; }
+
+.app-footer {
+    text-align: center; font-size: 12px; color: var(--gray-500);
+    padding: 14px; border-top: 1px solid var(--gray-300); background: #fff;
+}
+
+/* ---------------- CARDS ---------------- */
+.stat-card {
+    background: #fff; border: 1px solid var(--gray-300); border-radius: 8px;
+    padding: 16px 18px; display: flex; align-items: center; gap: 14px;
+    border-left: 4px solid var(--accent-blue);
+}
+.stat-card .stat-icon { font-size: 26px; color: var(--accent-blue); }
+.stat-card .stat-value { font-size: 22px; font-weight: 700; }
+.stat-card .stat-label { font-size: 12px; color: var(--gray-500); text-transform: uppercase; }
+.stat-card.critical { border-left-color: var(--accent-red); }
+.stat-card.critical .stat-icon { color: var(--accent-red); }
+.stat-card.warning { border-left-color: var(--accent-orange); }
+.stat-card.warning .stat-icon { color: var(--accent-orange); }
+.stat-card.success { border-left-color: var(--accent-green); }
+.stat-card.success .stat-icon { color: var(--accent-green); }
+
+/* ---------------- SEVERITY BADGES ---------------- */
+.badge-severity-critical { background: var(--accent-red); color: #fff; }
+.badge-severity-high     { background: var(--accent-orange); color: #fff; }
+.badge-severity-medium   { background: var(--accent-yellow); color: #1f2733; }
+.badge-severity-low      { background: var(--accent-blue); color: #fff; }
+.badge-severity-info     { background: var(--gray-500); color: #fff; }
+
+.card-panel {
+    background: #fff; border: 1px solid var(--gray-300); border-radius: 8px; padding: 18px;
+}
+.table thead th {
+    background: var(--navy-900); color: #fff; font-size: 12px; text-transform: uppercase;
+    border: none; white-space: nowrap;
+}
+.table-hover tbody tr:hover { background: #f0f4fa; }

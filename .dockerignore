@@ -1,0 +1,11 @@
+/.git
+/.env
+/.env.*
+!/.env.example
+/public/uploads/*
+/storage/*
+*.zip
+*.bak
+*.log
+.idea
+.vscode

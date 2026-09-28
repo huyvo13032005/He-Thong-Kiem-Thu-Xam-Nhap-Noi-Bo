@@ -1,0 +1,64 @@
+name: pentest-mgmt
+
+x-app-environment: &app-environment
+  DB_HOST: db
+  DB_PORT: "1433"
+  DB_DATABASE: PentestManagementDB
+  DB_USERNAME: pentest_app
+  DB_PASSWORD: ${DB_PASSWORD:?Run scripts/setup.ps1 or fill .env first}
+  APP_BASE_URL: http://localhost:${WEB_PORT:-8080}
+  APP_DEBUG: "0"
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    platform: linux/amd64
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?Run scripts/setup.ps1 or fill .env first}
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", 'SQLCMDPASSWORD="$$MSSQL_SA_PASSWORD" /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -C -b -l 5 -Q "SELECT 1" -o /dev/null']
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 30s
+    restart: unless-stopped
+
+  init:
+    image: pentest-mgmt-php:local
+    build: .
+    environment:
+      <<: *app-environment
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD:?Fill .env first}
+      DEMO_PASSWORD: ${DEMO_PASSWORD:-Password123!}
+    command: ["php", "scripts/init-db.php"]
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  web:
+    image: pentest-mgmt-php:local
+    build: .
+    environment: *app-environment
+    ports:
+      - "127.0.0.1:${WEB_PORT:-8080}:80"
+    volumes:
+      - evidence_data:/var/www/html/storage/evidence
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "php", "scripts/healthcheck.php"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 15s
+    restart: unless-stopped
+
+volumes:
+  sqlserver_data:
+  evidence_data:

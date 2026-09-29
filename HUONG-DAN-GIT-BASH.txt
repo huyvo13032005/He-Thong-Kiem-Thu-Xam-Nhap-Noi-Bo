@@ -1,4 +1,3 @@
-BO SUNG DOCKER VAO PROJECT PHASE 2 HIEN TAI
 
 1. Sao luu thu muc D:\PTTKHTTT\pentest-mgmt truoc khi chep de.
 2. Giai nen BO-SUNG-DOCKER.zip vao thu muc tam.

@@ -126,38 +126,6 @@ Chưa khắc phục toàn bộ lỗi nghiệp vụ/bảo mật: thiếu transact
 
 GitHub lưu mã nguồn. Push repository không tạo một website PHP đang chạy; GitHub Pages không chạy PHP/SQL Server. Demo bằng Docker local, hoặc sau này triển khai lên máy chủ có Docker.
 
-### Cách dùng Git + trình duyệt
-
-1. Đăng nhập đúng tài khoản `huyvo13032005`.
-2. Mở [tạo repository](https://github.com/new), đặt tên `pentest-mgmt`, chọn Private để chuẩn bị. Nếu muốn portfolio public, bạn có thể chọn Public khi đã rà soát dữ liệu.
-3. Không chọn tạo README, `.gitignore` hoặc license ở bước tạo repository (gói đã có README và `.gitignore`).
-4. Mở PowerShell trong thư mục project, chạy:
-
-```powershell
-git init -b main
-git config user.name "Vo Quoc Huy"
-git config user.email "EMAIL_DA_XAC_MINH_TREN_GITHUB_HOAC_NOREPLY_CUA_BAN"
-git add .
-git status --short
-git diff --cached --stat
-git commit -m "Add pentest management phase 2 with Docker"
-git remote add origin https://github.com/huyvo13032005/pentest-mgmt.git
-git push -u origin main
-```
-
-Thay email placeholder bằng email của bạn trong GitHub Settings → Emails trước khi commit. Git for Windows thường mở đăng nhập trình duyệt qua Git Credential Manager. Không dán token vào code, URL remote hoặc chat.
-
-Nếu repository tên khác, sửa URL tương ứng. Nếu repo đã có code/commit, clone repo đó và làm trên nhánh riêng; không force-push theo hướng dẫn khởi tạo mới này.
-
-`.env`, uploads, database backup và file capture đã được ignore. Kiểm tra bằng:
-
-```powershell
-git check-ignore .env
-git ls-files .env
-```
-
-Lệnh đầu phải in `.env` khi file tồn tại; lệnh sau không được in `.env`.
-
 ### Các lần cập nhật sau
 
 ```powershell

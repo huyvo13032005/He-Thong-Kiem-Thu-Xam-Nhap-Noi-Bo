@@ -32,6 +32,7 @@ class EngagementController extends Controller
     private ScopeModel $scopeModel;
     private ApprovalModel $approvalModel;
     private AssignmentModel $assignmentModel;
+    private FindingModel $findingModel;
 
     public function __construct()
     {
@@ -39,6 +40,7 @@ class EngagementController extends Controller
         $this->scopeModel      = new ScopeModel();
         $this->approvalModel   = new ApprovalModel();
         $this->assignmentModel = new AssignmentModel();
+        $this->findingModel = new FindingModel();
     }
 
     public function index(): void
@@ -137,16 +139,15 @@ class EngagementController extends Controller
             'scopeItems'     => $this->scopeModel->findByEngagement($id),
             'targetTypes'    => ScopeModel::TARGET_TYPES,
             'assignments'    => $this->assignmentModel->findByEngagement($id),
+            'findings' => $this->findingModel->findVisibleByEngagement($id,$this->currentUser()['role_code'],(int) $this->currentUser()['user_id']),
             'pentesters'     => $this->assignmentModel->availablePentesters(),
             'priorities'     => AssignmentModel::PRIORITIES,
             'approvalHistory'=> $this->approvalModel->historyForEngagement($id),
             'auditTrail'     => $auditStmt->fetchAll(),
-            'canManage'      => RoleMiddleware::can(self::MANAGE_ROLES)
-                                 && in_array($engagement['status'], ['DRAFT', 'REJECTED'], true),
-            'canAssign'      => RoleMiddleware::can(self::MANAGE_ROLES)
-                                 && in_array($engagement['status'], ['APPROVED', 'IN_PROGRESS'], true),
-            'canSubmit'      => RoleMiddleware::can(self::MANAGE_ROLES)
-                                 && in_array($engagement['status'], ['DRAFT', 'REJECTED'], true),
+            'canManage'      => RoleMiddleware::can(self::MANAGE_ROLES) && in_array($engagement['status'], ['DRAFT', 'REJECTED'], true),
+            'canAssign'      => RoleMiddleware::can(self::MANAGE_ROLES) && in_array($engagement['status'], ['APPROVED', 'IN_PROGRESS'], true),
+            'canSubmit'      => RoleMiddleware::can(self::MANAGE_ROLES) && in_array($engagement['status'], ['DRAFT', 'REJECTED'], true),
+            'canCreateFinding' => RoleMiddleware::can(['PENTESTER']) && $this->assignmentModel->isAlreadyAssigned($id,(int) $this->currentUser()['user_id']) && in_array($engagement['status'], ['APPROVED', 'IN_PROGRESS'], true),
         ]);
     }
 

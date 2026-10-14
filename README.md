@@ -70,15 +70,7 @@ Kiểm tra nghiệp vụ thủ công:
 4. `pm.tran`: kiểm tra Scope khóa; phân công `pentester.pham`.
 5. Engagement chuyển IN_PROGRESS; `admin` xem audit log của các thao tác.
 
-Chạy lại sau khi sửa code:
 
-```powershell
-docker compose up -d --build
-```
-
-Source được COPY vào image, không bind mount từ Windows, nên phải rebuild để đưa thay đổi vào container.
-
-## Tắt, chạy lại và xử lý lỗi
 
 ```powershell
 docker compose stop
